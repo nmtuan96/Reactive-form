@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-4">
+      <app-child (changeEvent)= "receiveData($event)" [childData]="parentData"></app-child>
+    </div>
+    <div class="col-8">
+      <h3>List Customer</h3>
+      <table class="table shadow p-3 mb-5 bg-white rounded" >
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Age</th>
+            <th scope="col">Address</th>
+            <th scope="col">Email</th>
+            <th scope="col">Carrer</th>
+            <th scope="col">Hobby</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor= "let cus of list,index as i">
+            <th scope="row">{{i+1}}</th>
+            <td>{{cus.name}}</td>
+            <td>{{cus.age}}</td>
+            <td>{{cus.address}}</td>
+            <td>{{cus.email}}</td>
+            <td>{{cus.carrer}}</td>
+            <td>{{cus.hobby}}</td>
+            <td>
+              <button class="btn btn-primary" (click)="editCustomer(cus.id)">Edit</button>
+              <button class="btn btn-danger" (click)="removeCustomer(i)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
