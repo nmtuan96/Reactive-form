@@ -12,7 +12,7 @@ export class ParentComponent implements OnInit {
   ngOnInit(): void {
   }
   receiveData($event){
-    this.list = $event
+    this.list = $event;
   }
   removeCustomer(i){
     this.list.splice(i,1);
@@ -20,9 +20,8 @@ export class ParentComponent implements OnInit {
 
   parentData:any;
   editCustomer(i){
-    debugger
     var data = this.list.find(e => e.id == i);
-    this.parentData = data
+    this.parentData = data;
   }
   
 }
