@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-child',
@@ -19,6 +19,7 @@ export class ChildComponent implements OnInit {
     hobby: new FormControl(''),
     checkB : new FormControl(false),
   });
+  constrainted: boolean;
   checkbox: boolean = false;
   setCus:any;
   constructor(private fb: FormBuilder) {
@@ -44,10 +45,9 @@ export class ChildComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  
+   this.constraintValidate();
   }
   addCustomer(){
-    debugger;
     if(!this.customer.value.id){
       this.customer.value.id = this.list.length+1;
       this.list.push(this.customer.value);
@@ -96,14 +96,14 @@ export class ChildComponent implements OnInit {
       });
     }
   }
-  // ValidateAge(control: AbstractControl): {[key: string]: any} | null  {
-  //   if(control.value &&control.value<15 && control.value>0){
-  //     return { 'AddressInvalid': true };
-  //   }
-  //   if (control.value && control.value> 15 && control.value <= 100) {
-  //     this.fg.get('address').setValidators([Validators.required, Validators.minLength(20), Validators.maxLength(50)])
-  //     return { 'AddressInvalid': true };
-  //   }
-  //   return { 'Invalid': false };
-  // }
+  
+  constraintValidate() {
+    const address = this.customer.get('address');
+    this.customer.get('age').valueChanges.subscribe(age=>{
+      if(age > 15){
+        address.setValidators([Validators.required, Validators.minLength(20) , Validators.maxLength(50)]);
+        this.constrainted = true;
+      } else this.constrainted = false;
+    })
+  }
 }
